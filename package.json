@@ -6,7 +6,7 @@
   "homepage": "https://aaronbeall.github.io/growth-calc/",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite docs",
+    "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
