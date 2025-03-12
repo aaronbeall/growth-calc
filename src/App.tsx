@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import ResultsTable from "./ResultsTable";
-import { Form, Container, Row, Col } from "react-bootstrap";
+import { Form, Container } from "react-bootstrap";
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 type ChartData = any//{ date: string } & { [K in ChartGrowthKey]: number };
