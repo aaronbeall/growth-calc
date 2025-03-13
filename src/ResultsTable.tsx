@@ -1,4 +1,6 @@
 import { Table } from "react-bootstrap";
+import "./ResultsTable.css";
+import { Cell } from "recharts";
 
 const ResultsTable = ({ data }: { data: string[][] }) => {
   if (!data.length) return null;
@@ -18,7 +20,7 @@ const ResultsTable = ({ data }: { data: string[][] }) => {
         {rows.map((row, rowIndex) => (
           <tr key={rowIndex}>
             {row.map((cell, cellIndex) => (
-              <td key={cellIndex}>{cell}</td>
+              <td key={cellIndex}><span className={getClassName(cell, rows[Math.max(rowIndex - 1, 0)][cellIndex])}>{cell}</span></td>
             ))}
           </tr>
         ))}
@@ -26,5 +28,15 @@ const ResultsTable = ({ data }: { data: string[][] }) => {
     </Table>
   );
 };
+
+const getClassName = (cell: string, prevCell: string) => {
+  if (cell.startsWith("$") && prevCell) {
+    const nonNumeric = /[\$,]/g;
+    const num = cell.replace(nonNumeric, "");
+    const prevNum = prevCell.replace(nonNumeric, "");
+    return num >= prevNum ? "positive" : "negative";
+  }
+  return undefined;
+}
 
 export default ResultsTable;
