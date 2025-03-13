@@ -1,6 +1,5 @@
 import { Table } from "react-bootstrap";
 import "./ResultsTable.css";
-import { Cell } from "recharts";
 
 const ResultsTable = ({ data }: { data: string[][] }) => {
   if (!data.length) return null;
