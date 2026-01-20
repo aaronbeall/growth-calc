@@ -3,6 +3,7 @@ import ResultsTable from "./ResultsTable";
 import { Form } from "react-bootstrap";
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { HiChartBar, HiTable } from "react-icons/hi";
+import usePersistedState from "./usePersistedState";
 
 type ChartData = any//{ date: string } & { [K in ChartGrowthKey]: number };
 
@@ -79,9 +80,9 @@ const parseGrowths = (input: string): (number | [number, number])[] => {
 
 const App = () => {
   const [activeTab, setActiveTab] = useState<'chart' | 'table'>('chart');
-  const [startWith, setStartWith] = useState(2500);
-  const [growthInput, setGrowthInput] = useState("1, 2, 3, 5, -2-5, -5-8, -50-50");
-  const [duration, setDuration] = useState(72);
+  const [startWith, setStartWith] = usePersistedState(2500, "start-with");
+  const [growthInput, setGrowthInput] = usePersistedState("1, 2, 3, 5, -2-5, -5-8, -50-50", "growth-input");
+  const [duration, setDuration] = usePersistedState(72, "duration");
 
   const growths = useMemo(
     () => parseGrowths(growthInput), 
