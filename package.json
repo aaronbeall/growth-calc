@@ -11,10 +11,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/react-icons": "^2.2.7",
     "bootstrap": "^5.3.3",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
     "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0",
     "recharts": "^2.15.1"
   },
   "devDependencies": {
