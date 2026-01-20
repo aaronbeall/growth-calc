@@ -49,7 +49,7 @@ const generateData = (startWith: number, growths: (number | [number, number])[],
         (obj, total, index) => ({
           ...obj,
           date: formatDate(date),
-          [formatGrowth(growths[index])]: total.toFixed(0),
+          [formatGrowth(growths[index])]: total,
         }),
         {} as ChartData
       )
