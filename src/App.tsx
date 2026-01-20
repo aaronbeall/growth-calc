@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import ResultsTable from "./ResultsTable";
 import { Form, Container } from "react-bootstrap";
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { HiChartBar, HiTable } from "react-icons/hi";
 
 type ChartData = any//{ date: string } & { [K in ChartGrowthKey]: number };
 
@@ -77,7 +78,7 @@ const parseGrowths = (input: string): (number | [number, number])[] => {
 };
 
 const App = () => {
-
+  const [activeTab, setActiveTab] = useState<'chart' | 'table'>('chart');
   const [startWith, setStartWith] = useState(2500);
   const [growthInput, setGrowthInput] = useState("1, 2, 3, 5, -2-5, -5-8, -50-50");
   const [duration, setDuration] = useState(72);
@@ -140,42 +141,60 @@ const App = () => {
         </aside>
 
         <main className="main-content">
-          <section className="chart-section">
-            <h3 className="section-title">Growth Over Time</h3>
-            <div className="chart-container">
-              <ResponsiveContainer width="100%" height={400}>
-                <LineChart data={chartData}>
-                  <XAxis dataKey="date" tick={false} />
-                  <YAxis tickFormatter={formatUSD} />
-                  <Tooltip 
-                    formatter={ value => formatUSD(value as number) }
-                    contentStyle={{
-                      backgroundColor: 'rgba(0, 0, 0, 0.9)',
-                      border: '1px solid rgba(255, 255, 255, 0.2)',
-                      borderRadius: '8px',
-                      backdropFilter: 'blur(10px)',
-                      color: 'rgba(255, 255, 255, 0.9)'
-                    }}
-                    labelStyle={{
-                      color: 'rgba(255, 255, 255, 0.7)',
-                      fontWeight: 600,
-                      marginBottom: '4px'
-                    }}
-                  />
-                  <Legend />
-                  {growths.map((growth, index) => (
-                    <Line key={index} type="monotone" dataKey={formatGrowth(growth)} stroke={`hsl(${(index * 50) % 360}, 70%, 50%)`} strokeWidth={2} dot={false} />
-                  ))}
-                </LineChart>
-              </ResponsiveContainer>
+          <section className="data-section">
+            <div className="tab-header">
+              <div className="tabs">
+                <button 
+                  className={`tab ${activeTab === 'chart' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('chart')}
+                >
+                  <HiChartBar /> Chart
+                </button>
+                <button 
+                  className={`tab ${activeTab === 'table' ? 'active' : ''}`}
+                  onClick={() => setActiveTab('table')}
+                >
+                  <HiTable /> Table
+                </button>
+              </div>
             </div>
-          </section>
 
-          <section className="table-section">
-            <h3 className="section-title">Data Table</h3>
-            <div className="table-container">
-              <ResultsTable data={tableData} />
-            </div>
+            {activeTab === 'chart' ? (
+              <div className="chart-container">
+                <ResponsiveContainer width="100%" height={500}>
+                  <LineChart data={chartData}>
+                    <XAxis dataKey="date" tick={false} />
+                    <YAxis 
+                      tickFormatter={formatUSD} 
+                      domain={[0, (dataMax: number) => Math.ceil(dataMax * 1.1)]} 
+                    />
+                    <Tooltip 
+                      formatter={ value => formatUSD(value as number) }
+                      contentStyle={{
+                        backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                        border: '1px solid rgba(255, 255, 255, 0.2)',
+                        borderRadius: '8px',
+                        backdropFilter: 'blur(10px)',
+                        color: 'rgba(255, 255, 255, 0.9)'
+                      }}
+                      labelStyle={{
+                        color: 'rgba(255, 255, 255, 0.7)',
+                        fontWeight: 600,
+                        marginBottom: '4px'
+                      }}
+                    />
+                    <Legend />
+                    {growths.map((growth, index) => (
+                      <Line key={index} type="monotone" dataKey={formatGrowth(growth)} stroke={`hsl(${(index * 50) % 360}, 70%, 50%)`} strokeWidth={2} dot={false} />
+                    ))}
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            ) : (
+              <div className="table-container">
+                <ResultsTable data={tableData} />
+              </div>
+            )}
           </section>
         </main>
       </div>
