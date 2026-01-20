@@ -96,7 +96,7 @@ const App = () => {
   return (
     <div className="app-container">
       <header className="app-header">
-        <h1>Growth Simulation</h1>
+        <h1>💸 Growth Simulation</h1>
         <p className="subtitle">Analyze multiple growth scenarios over time</p>
       </header>
 
