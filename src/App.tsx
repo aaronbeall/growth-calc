@@ -147,7 +147,21 @@ const App = () => {
                 <LineChart data={chartData}>
                   <XAxis dataKey="date" tick={false} />
                   <YAxis tickFormatter={formatUSD} />
-                  <Tooltip formatter={ value => formatUSD(value as number) } />
+                  <Tooltip 
+                    formatter={ value => formatUSD(value as number) }
+                    contentStyle={{
+                      backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                      border: '1px solid rgba(255, 255, 255, 0.2)',
+                      borderRadius: '8px',
+                      backdropFilter: 'blur(10px)',
+                      color: 'rgba(255, 255, 255, 0.9)'
+                    }}
+                    labelStyle={{
+                      color: 'rgba(255, 255, 255, 0.7)',
+                      fontWeight: 600,
+                      marginBottom: '4px'
+                    }}
+                  />
                   <Legend />
                   {growths.map((growth, index) => (
                     <Line key={index} type="monotone" dataKey={formatGrowth(growth)} stroke={`hsl(${(index * 50) % 360}, 70%, 50%)`} strokeWidth={2} dot={false} />
