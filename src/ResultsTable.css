@@ -1,7 +1,113 @@
+.results-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.9rem;
+}
+
+.results-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(102, 126, 234, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.results-table thead th {
+  padding: 0.875rem 1rem;
+  font-weight: 600;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.9);
+  border-bottom: 2px solid rgba(102, 126, 234, 0.3);
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.results-table tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.results-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.results-table tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.results-table tbody tr:nth-child(even):hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.results-table tbody td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.results-table tbody td:first-child {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+}
+
 .positive {
-    color: green;
+  color: #10b981;
+  font-weight: 600;
 }
 
 .negative {
-    color: red;
+  color: #ef4444;
+  font-weight: 600;
+}
+
+.neutral {
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+}
+
+/* Light mode support */
+@media (prefers-color-scheme: light) {
+  .results-table thead {
+    background: rgba(102, 126, 234, 0.08);
+  }
+
+  .results-table thead th {
+    color: rgba(0, 0, 0, 0.9);
+    border-bottom: 2px solid rgba(102, 126, 234, 0.3);
+  }
+
+  .results-table tbody tr:hover {
+    background: rgba(0, 0, 0, 0.03);
+  }
+
+  .results-table tbody tr:nth-child(even) {
+    background: rgba(0, 0, 0, 0.01);
+  }
+
+  .results-table tbody tr:nth-child(even):hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+
+  .results-table tbody td {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .results-table tbody td:first-child {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .positive {
+    color: #059669;
+  }
+
+  .negative {
+    color: #dc2626;
+  }
+
+  .neutral {
+    color: rgba(0, 0, 0, 0.4);
+  }
 }

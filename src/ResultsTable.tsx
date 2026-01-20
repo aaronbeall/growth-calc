@@ -1,4 +1,3 @@
-import { Table } from "react-bootstrap";
 import "./ResultsTable.css";
 
 const ResultsTable = ({ data }: { data: string[][] }) => {
@@ -7,29 +6,38 @@ const ResultsTable = ({ data }: { data: string[][] }) => {
   const [header, ...rows] = data;
 
   return (
-    <Table striped bordered hover responsive>
-      <thead>
-        <tr>
-          {header.map((header, index) => (
-            <th key={index}>{header}</th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {rows.map((row, rowIndex) => (
-          <tr key={rowIndex}>
-            {row.map((cell, cellIndex) => (
-              <td key={cellIndex}><span className={getClassName(cell, rows[Math.max(rowIndex - 1, 0)][cellIndex])}>{cell}</span></td>
+    <div style={{ overflowX: 'auto', maxHeight: '600px', overflowY: 'auto' }}>
+      <table className="results-table">
+        <thead>
+          <tr>
+            {header.map((header, index) => (
+              <th key={index}>{header}</th>
             ))}
           </tr>
-        ))}
-      </tbody>
-    </Table>
+        </thead>
+        <tbody>
+          {rows.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {row.map((cell, cellIndex) => (
+                <td key={cellIndex}>
+                  <span className={getClassName(cell, rows[Math.max(rowIndex - 1, 0)][cellIndex])}>
+                    {cell}
+                  </span>
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
 const getClassName = (cell: string, prevCell: string) => {
-  if (cell.startsWith("$") && prevCell) {
+  if (cell === "--") {
+    return "neutral";
+  }
+  if (cell.startsWith("$") && prevCell && prevCell.startsWith("$")) {
     const nonNumeric = /[\$,]/g;
     const num = cell.replace(nonNumeric, "");
     const prevNum = prevCell.replace(nonNumeric, "");

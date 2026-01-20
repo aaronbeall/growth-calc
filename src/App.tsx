@@ -93,56 +93,79 @@ const App = () => {
   );
 
   return (
-    <Container className="mt-4">
-      <h2>Growth Simulation</h2>
+    <div className="app-container">
+      <header className="app-header">
+        <h1>Growth Simulation</h1>
+        <p className="subtitle">Analyze multiple growth scenarios over time</p>
+      </header>
 
-      <Form>
-        <Form.Group className="mb-3">
-          <Form.Label>Starting Amount ($)</Form.Label>
-          <Form.Control
-            type="number"
-            value={startWith}
-            onChange={(e) => setStartWith(parseFloat(e.target.value) || 0)}
-          />
-        </Form.Group>
+      <div className="app-layout">
+        <aside className="sidebar">
+          <div className="sidebar-content">
+            <h3 className="section-title">Configuration</h3>
+            <Form>
+              <Form.Group className="mb-4">
+                <Form.Label>Starting Amount ($)</Form.Label>
+                <Form.Control
+                  type="number"
+                  value={startWith}
+                  onChange={(e) => setStartWith(parseFloat(e.target.value) || 0)}
+                  className="form-input"
+                />
+              </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label>Growth Rates (%, comma separated)</Form.Label>
-          <Form.Control
-            type="text"
-            value={growthInput}
-            onChange={(e) => setGrowthInput(e.target.value)}
-          />
-          <Form.Text className="text-muted">Example: 1, 2, 3, -2-5</Form.Text>
-        </Form.Group>
+              <Form.Group className="mb-4">
+                <Form.Label>Growth Rates (%, comma separated)</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  value={growthInput}
+                  onChange={(e) => setGrowthInput(e.target.value)}
+                  className="form-input"
+                />
+                <Form.Text className="text-muted">Example: 1, 2, 3, -2-5</Form.Text>
+              </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label>Days</Form.Label>
-          <Form.Control
-            type="number"
-            value={duration}
-            onChange={(e) => setDuration(parseFloat(e.target.value) || 0)}
-          />
-        </Form.Group>
-      </Form>
+              <Form.Group className="mb-4">
+                <Form.Label>Days</Form.Label>
+                <Form.Control
+                  type="number"
+                  value={duration}
+                  onChange={(e) => setDuration(parseFloat(e.target.value) || 0)}
+                  className="form-input"
+                />
+              </Form.Group>
+            </Form>
+          </div>
+        </aside>
 
-      <h4>Growth Over Time</h4>
-      <ResponsiveContainer width="100%" height={400}>
-        <LineChart data={chartData}>
-          <XAxis dataKey="date" tick={false} />
-          <YAxis tickFormatter={formatUSD} />
-          <Tooltip formatter={ value => formatUSD(value as number) } />
-          <Legend />
-          {growths.map((growth, index) => (
-            <Line key={index} type="monotone" dataKey={formatGrowth(growth)} stroke={`hsl(${(index * 50) % 360}, 70%, 50%)`} strokeWidth={2} dot={false} />
-          ))}
-        </LineChart>
-      </ResponsiveContainer>
+        <main className="main-content">
+          <section className="chart-section">
+            <h3 className="section-title">Growth Over Time</h3>
+            <div className="chart-container">
+              <ResponsiveContainer width="100%" height={400}>
+                <LineChart data={chartData}>
+                  <XAxis dataKey="date" tick={false} />
+                  <YAxis tickFormatter={formatUSD} />
+                  <Tooltip formatter={ value => formatUSD(value as number) } />
+                  <Legend />
+                  {growths.map((growth, index) => (
+                    <Line key={index} type="monotone" dataKey={formatGrowth(growth)} stroke={`hsl(${(index * 50) % 360}, 70%, 50%)`} strokeWidth={2} dot={false} />
+                  ))}
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </section>
 
-      <h4>Data Table</h4>
-      <ResultsTable data={tableData} />
-
-    </Container>
+          <section className="table-section">
+            <h3 className="section-title">Data Table</h3>
+            <div className="table-container">
+              <ResultsTable data={tableData} />
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
   );
 };
 
